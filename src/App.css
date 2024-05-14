@@ -1,0 +1,114 @@
+.App {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  background-color: rgba(178, 110, 65, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.parent {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+
+.App button {
+  position: absolute;
+  top: 10px;
+  color: #b26e41;
+  background-color: #ffd59b;
+  padding: 4px 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  border: 1px solid black;
+  right: 10px;
+}
+
+.board {
+  display: block;
+}
+
+.board .row {
+  display: flex;
+}
+
+.dark {
+  background-color: #b26e41;
+}
+
+.light {
+  background-color: #ffd59b;
+}
+
+.square {
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.highlighted {
+  background-color: red;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+svg {
+  width: 30px;
+  height: 30px;
+}
+
+svg.black {
+  fill: black;
+}
+
+svg.white {
+  fill: #ebecd0;
+}
+
+.active {
+  opacity: 0.5;
+}
+
+.selected {
+  border: 1px solid red;
+  z-index: 1000;
+}
+
+.not-selected {
+  border: 1px solid black;
+}
+
+.playerDiv,
+.pleceDiv {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 3;
+}
+
+.playerDiv {
+  justify-content: space-between;
+}
+
+.pleceDiv div {
+  width: 10;
+  height: 10;
+}
+
+@media only screen and (max-width: 768px) {
+  .square {
+    width: 30px;
+    height: 30px;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
