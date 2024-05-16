@@ -103,7 +103,7 @@ const Chess = () => {
   const [highlightedBoxes, sethighlightedBoxes] = useState([]);
 
   // turn state , toggle between black and white
-  const [currentTurn, setcurrentTurn] = useState("black");
+  const [currentTurn, setcurrentTurn] = useState("white");
   const [playerAEats, setplayerAEats] = useState([]);
   const [playerBEats, setplayerBEats] = useState([]);
   const [loader, setloader] = useState(true);
@@ -154,8 +154,8 @@ const Chess = () => {
       rook("black"),
       knight("black"),
       bishop("black"),
-      king("black"),
       queen("black"),
+      king("black"),
       bishop("black"),
       knight("black"),
       rook("black"),

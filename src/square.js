@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { findPathToKing, possiblePositions } from "./logics";
@@ -86,6 +87,36 @@ const Square = ({
     [currentTurn]
   );
 
+  const deepCloneArray = useCallback((arr) => {
+    // Check if the input is an array
+    if (!Array.isArray(arr)) {
+      throw new Error("Input is not an array");
+    }
+
+    // Initialize an empty result array
+    const result = [];
+
+    // Iterate over each element in the array
+    for (let i = 0; i < arr.length; i++) {
+      const element = arr[i];
+
+      // Check if the element is an array
+      if (Array.isArray(element)) {
+        // If the element is an array, recursively clone it
+        result.push(deepCloneArray(element));
+      } else if (typeof element === "object" && element !== null) {
+        // If the element is an object, clone it using object spread
+        result.push({ ...element });
+      } else {
+        // For primitive types, directly push the value
+        result.push(element);
+      }
+    }
+
+    // Return the cloned array
+    return result;
+  }, []);
+
   const isCheckCase = useCallback(
     (newBoard) => {
       // Get the id of the current player's king
@@ -120,16 +151,17 @@ const Square = ({
                 board: newBoard,
               });
 
-              const highlightCheckPath = [];
+              const kingPosition = [];
 
               // Check if any of the possible positions attack the current player's king
               const isAttackingKing = response.some(
                 ([responseRow, responseCol]) => {
                   const enemy = newBoard[responseRow][responseCol];
                   if (enemy !== "" && enemy.props.id === currentPlayerKingId) {
-                    highlightCheckPath.push([responseRow, responseCol]);
+                    kingPosition.push([responseRow, responseCol]);
+                    return true;
                   }
-                  return enemy !== "" && enemy.props.id === currentPlayerKingId;
+                  return false;
                 }
               );
 
@@ -143,7 +175,11 @@ const Square = ({
                   opponentPlayerRow: row,
                   opponentPlayerCol: col,
                   makeMove: false,
-                  highlightCheckPath,
+                  kingId: currentPlayerKingId,
+                  newBoard,
+                  targetKingPositionCol: kingPosition[0][1],
+                  targetKingPositionRow: kingPosition[0][0],
+                  highlightCheckPath: [],
                 };
               }
             } else {
@@ -162,10 +198,9 @@ const Square = ({
                   const enemy = newBoard[responseRow][responseCol];
                   if (enemy !== "" && enemy.props.id === opponentPlayerKingId) {
                     kingPosition.push([responseRow, responseCol]);
+                    return true;
                   }
-                  return (
-                    enemy !== "" && enemy.props.id === opponentPlayerKingId
-                  );
+                  return false;
                 }
               );
               if (isAttackingKing) {
@@ -185,6 +220,10 @@ const Square = ({
                   opponentPlayerCol: col,
                   makeMove: true,
                   highlightCheckPath,
+                  kingId: opponentPlayerKingId,
+                  newBoard,
+                  targetKingPositionCol: kingPosition[0][1],
+                  targetKingPositionRow: kingPosition[0][0],
                 };
               }
             }
@@ -200,9 +239,92 @@ const Square = ({
         opponentPlayerCol: id,
         makeMove: true,
         highlightCheckPath: [],
+        kingId: "",
+        newBoard,
+        targetKingPositionCol: 0,
+        targetKingPositionRow: 0,
       };
     },
     [currentTurn]
+  );
+
+  const isAppliedCheckMateCase = useCallback(
+    ({
+      kingId,
+      newBoard,
+      targetKingPositionCol,
+      targetKingPositionRow,
+      highlightCheckPath,
+    }) => {
+      // can king escape
+      // Get possible positions for the king's piece
+      const response = possiblePositions({
+        draggedPieceId: kingId,
+        currentPosition: {
+          row: targetKingPositionRow,
+          col: targetKingPositionCol,
+        },
+        board: newBoard,
+      });
+
+      let flag = true;
+
+      for (let index = 0; index < response.length; index++) {
+        let cloneOfMap = deepCloneArray(newBoard);
+        cloneOfMap[response[index][0]][response[index][1]] =
+          newBoard[targetKingPositionRow][targetKingPositionCol];
+        cloneOfMap[targetKingPositionRow][targetKingPositionCol] = "";
+        const { checkApplied: a } = isCheckCase(cloneOfMap);
+
+        if (!a) {
+          flag = false;
+          return;
+        }
+      }
+
+      // can we bring anyone between king and attacker
+      for (let x = 0; x < newBoard.length; x++) {
+        for (let y = 0; y < newBoard[x].length; y++) {
+          const piece = newBoard[x][y];
+          if (piece !== "") {
+            const pieceId = piece.props.id;
+            const possiblePiecePosition = possiblePositions({
+              draggedPieceId: pieceId,
+              currentPosition: {
+                row: x,
+                col: y,
+              },
+              board: newBoard,
+            });
+            if (
+              (pieceId.includes("black") && kingId.includes("black")) ||
+              (pieceId.includes("white") && kingId.includes("white"))
+            ) {
+              // Convert the arrays to Sets to remove duplicate elements
+              const set1 = new Set(possiblePiecePosition);
+              const set2 = new Set(highlightCheckPath);
+
+              // Check if any element in set1 exists in set2
+              for (const item of set1) {
+                if (set2.has(item)) {
+                  flag = false;
+                  return; // If any common element found, return false
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (flag) {
+        // check & mate
+        return true;
+      } else {
+        // no check & mate
+        return false;
+      }
+    },
+    [deepCloneArray, isCheckCase]
   );
 
   function findHighlightedPositions() {
@@ -273,11 +395,27 @@ const Square = ({
             opponentPlayerRow,
             opponentPlayerCol,
             makeMove,
+            kingId,
+            newBoard,
+            targetKingPositionCol,
+            targetKingPositionRow,
             highlightCheckPath,
           } = isCheckCase(prev);
 
           if (checkApplied) {
-            alert("check applied");
+            if (
+              isAppliedCheckMateCase({
+                kingId: kingId,
+                newBoard,
+                targetKingPositionCol,
+                targetKingPositionRow,
+                highlightCheckPath,
+              })
+            ) {
+              alert("bro you lose");
+            } else {
+              alert("check applied");
+            }
           }
           if (makeMove) {
             setBoard(prev);
@@ -321,36 +459,6 @@ const Square = ({
   const shouldHighlight = highlightedBoxes.some(([row, col]) => {
     return row === index && col === id;
   });
-
-  function deepCloneArray(arr) {
-    // Check if the input is an array
-    if (!Array.isArray(arr)) {
-      throw new Error("Input is not an array");
-    }
-
-    // Initialize an empty result array
-    const result = [];
-
-    // Iterate over each element in the array
-    for (let i = 0; i < arr.length; i++) {
-      const element = arr[i];
-
-      // Check if the element is an array
-      if (Array.isArray(element)) {
-        // If the element is an array, recursively clone it
-        result.push(deepCloneArray(element));
-      } else if (typeof element === "object" && element !== null) {
-        // If the element is an object, clone it using object spread
-        result.push({ ...element });
-      } else {
-        // For primitive types, directly push the value
-        result.push(element);
-      }
-    }
-
-    // Return the cloned array
-    return result;
-  }
 
   function movePieceOnClick() {
     // Function to handle the click event for moving chess pieces
@@ -404,10 +512,26 @@ const Square = ({
           opponentPlayerCol,
           makeMove,
           highlightCheckPath,
+          kingId,
+          newBoard,
+          targetKingPositionCol,
+          targetKingPositionRow,
         } = isCheckCase(prev);
 
         if (checkApplied) {
-          alert("check applied");
+          if (
+            isAppliedCheckMateCase({
+              kingId: kingId,
+              newBoard,
+              targetKingPositionCol,
+              targetKingPositionRow,
+              highlightCheckPath,
+            })
+          ) {
+            alert("bro you lose");
+          } else {
+            alert("check applied");
+          }
         }
         if (makeMove) {
           // Switch the turn to the next player
@@ -449,16 +573,32 @@ const Square = ({
           opponentPlayerCol,
           makeMove,
           highlightCheckPath,
+          kingId,
+          newBoard,
+          targetKingPositionCol,
+          targetKingPositionRow,
         } = isCheckCase(prev);
 
         if (checkApplied) {
-          alert("check applied");
+          if (
+            isAppliedCheckMateCase({
+              kingId: kingId,
+              newBoard,
+              targetKingPositionCol,
+              targetKingPositionRow,
+              highlightCheckPath,
+            })
+          ) {
+            alert("bro you lose");
+          } else {
+            alert("check applied");
+          }
         }
 
         if (makeMove) {
           // Update the board state
           setcurrentTurn((prev) => (prev === "black" ? "white" : "black"));
-          setBoard(prev);
+          setBoard(newBoard);
           saveCurrentTurn(currentTurn);
           if (checkApplied) {
             setcurrentClickedPiece([

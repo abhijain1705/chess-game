@@ -135,7 +135,6 @@ function possibleQueen({ currentPosition: { row, col }, board, color }) {
     });
     possibles.push(...blackPawn);
   }
-
   return possibles;
 }
 
@@ -590,56 +589,69 @@ function isBishopHittingKing({
   targetKingPositionRow,
   targetKingPositionCol,
 }) {
-  let row = piecePositionRow - 1;
-  let col = piecePositionCol - 1;
+  function checkBottomLeft(rowIndex, colIndex, rowDirection, colDirection) {
+    while (
+      rowIndex <= targetKingPositionRow &&
+      colIndex >= targetKingPositionCol
+    ) {
+      path.push([rowIndex, colIndex]);
+
+      rowIndex += rowDirection;
+      colIndex += colDirection;
+    }
+  }
+  function checkBottomRight(rowIndex, colIndex, rowDirection, colDirection) {
+    while (
+      rowIndex <= targetKingPositionRow &&
+      colIndex <= targetKingPositionCol
+    ) {
+      path.push([rowIndex, colIndex]);
+      rowIndex += rowDirection;
+      colIndex += colDirection;
+    }
+  }
+  function checkTopLeft(rowIndex, colIndex, rowDirection, colDirection) {
+    while (
+      rowIndex >= targetKingPositionRow &&
+      colIndex >= targetKingPositionCol
+    ) {
+      path.push([rowIndex, colIndex]);
+
+      rowIndex += rowDirection;
+      colIndex += colDirection;
+    }
+  }
+  function checkTopRight(rowIndex, colIndex, rowDirection, colDirection) {
+    while (
+      rowIndex >= targetKingPositionRow &&
+      colIndex <= targetKingPositionCol
+    ) {
+      path.push([rowIndex, colIndex]);
+
+      rowIndex += rowDirection;
+      colIndex += colDirection;
+    }
+  }
+  // top-right
+  checkTopRight(piecePositionRow - 1, piecePositionCol + 1, -1, +1);
 
   // top-left
-  if (
-    piecePositionCol > targetKingPositionCol &&
-    piecePositionRow > targetKingPositionRow
-  ) {
-    while (col >= targetKingPositionCol && row >= targetKingPositionRow) {
-      path.push([row, col]);
-      row--;
-      col--;
-    }
-  }
-
-  // top-right
-  if (
-    piecePositionCol < targetKingPositionCol &&
-    piecePositionRow > targetKingPositionRow
-  ) {
-    while (col <= targetKingPositionCol && row >= targetKingPositionRow) {
-      path.push([row, col]);
-      row--;
-      col++;
-    }
-  }
+  checkTopLeft(piecePositionRow - 1, piecePositionCol - 1, -1, -1);
 
   // bottom-right
-  if (
-    piecePositionCol < targetKingPositionCol &&
-    piecePositionRow < targetKingPositionRow
-  ) {
-    while (col <= targetKingPositionCol && row <= targetKingPositionRow) {
-      path.push([row, col]);
-      row++;
-      col++;
-    }
-  }
+  checkBottomRight(piecePositionRow + 1, piecePositionCol + 1, +1, +1);
 
   // bottom-left
-  if (
-    piecePositionCol > targetKingPositionCol &&
-    piecePositionRow < targetKingPositionRow
-  ) {
-    while (col >= targetKingPositionCol && row <= targetKingPositionRow) {
-      path.push([row, col]);
-      row++;
-      col--;
-    }
-  }
+  checkBottomLeft(piecePositionRow + 1, piecePositionCol - 1, +1, -1);
+
+  console.log(
+    piecePositionRow,
+    piecePositionCol,
+    path,
+    targetKingPositionRow,
+    targetKingPositionCol,
+    "patpatpatpathhhh"
+  );
   return path;
 }
 
