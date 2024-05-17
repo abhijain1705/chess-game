@@ -1,11 +1,10 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ES2015"],
     "outDir": "./dist",
-    "rootDir": "./src",
     "types": ["jest", "node"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["."],
+  "exclude": ["node_modules", "dist"],
 }
