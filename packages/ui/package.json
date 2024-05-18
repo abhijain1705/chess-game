@@ -15,7 +15,6 @@
     "clean": "rm -rf dist",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/",
     "test": "jest"
   },
   "jest": {
