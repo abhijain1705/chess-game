@@ -1,7 +1,7 @@
-import { log } from "@repo/logger";
 import { createServer } from "./server";
+import { log } from "@repo/logger";
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 3001;
 const server = createServer();
 
 server.listen(port, () => {

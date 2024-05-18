@@ -1,13 +1,13 @@
 import supertest from "supertest";
 import { createServer } from "../server";
 
-describe("Server", () => {
-  it("health check returns 200", async () => {
+describe("server", () => {
+  it("status check returns 200", async () => {
     await supertest(createServer())
       .get("/status")
       .expect(200)
       .then((res) => {
-        expect(res.ok).toBe(true);
+        expect(res.body.ok).toBe(true);
       });
   });
 
@@ -16,7 +16,7 @@ describe("Server", () => {
       .get("/message/jared")
       .expect(200)
       .then((res) => {
-        expect(res.body).toEqual({ message: "hello jared" });
+        expect(res.body.message).toBe("hello jared");
       });
   });
 });

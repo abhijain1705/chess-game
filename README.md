@@ -1,34 +1,63 @@
-# Turborepo kitchen sink starter
+# Turborepo Docker starter
 
-This is an official starter Turborepo with multiple meta-frameworks all working in harmony and sharing packages.
-
-This example also shows how to use [Workspace Configurations](https://turbo.build/repo/docs/core-concepts/monorepos/configuring-workspaces).
+This is an official Docker starter Turborepo.
 
 ## Using this example
 
 Run the following command:
 
 ```sh
-npx create-turbo@latest -e kitchen-sink
+npx create-turbo@latest -e with-docker
 ```
 
 ## What's inside?
 
-This Turborepo includes the following packages and apps:
+This Turborepo includes the following:
 
 ### Apps and Packages
 
+- `web`: a [Next.js](https://nextjs.org/) app
 - `api`: an [Express](https://expressjs.com/) server
-- `storefront`: a [Next.js](https://nextjs.org/) app
-- `admin`: a [Vite](https://vitejs.dev/) single page app
-- `blog`: a [Remix](https://remix.run/) blog
-- `@repo/eslint-config`: ESLint configurations used throughout the monorepo
-- `@repo/jest-presets`: Jest configurations
-- `@repo/logger`: isomorphic logger (a small wrapper around console.log)
-- `@repo/ui`: a dummy React UI library (which contains `<CounterButton>` and `<Link>` components)
+- `@repo/ui`: a React component library
+- `@repo/logger`: Isomorphic logger (a small wrapper around console.log)
+- `@repo/eslint-config`: ESLint presets
 - `@repo/typescript-config`: tsconfig.json's used throughout the monorepo
+- `@repo/jest-presets`: Jest configurations
 
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Docker
+
+This repo is configured to be built with Docker, and Docker compose. To build all apps in this repo:
+
+```
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create app_network
+
+# Build prod using new BuildKit engine
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build
+
+# Start prod in detached mode
+docker-compose -f docker-compose.yml up -d
+```
+
+Open http://localhost:3000.
+
+To shutdown all running containers:
+
+```
+# Stop all running containers
+docker kill $(docker ps -q) && docker rm $(docker ps -a -q)
+```
+
+### Remote Caching
+
+This example includes optional remote caching. In the Dockerfiles of the apps, uncomment the build arguments for `TURBO_TEAM` and `TURBO_TOKEN`. Then, pass these build arguments to your Docker build.
+
+You can test this behavior using a command like:
+
+`docker build -f apps/web/Dockerfile . --build-arg TURBO_TEAM=“your-team-name” --build-arg TURBO_TOKEN=“your-token“ --no-cache`
 
 ### Utilities
 
