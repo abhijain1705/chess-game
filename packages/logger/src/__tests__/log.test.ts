@@ -5,6 +5,7 @@ jest.spyOn(global.console, "log");
 describe("@repo/logger", () => {
   it("prints a message", () => {
     log("hello");
-    expect(console.log).toHaveBeenCalled();
+    // eslint-disable-next-line no-console -- testing console
+    expect(console.log).toBeCalledWith("LOGGER: ", "hello");
   });
 });
