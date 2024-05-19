@@ -1,0 +1,55 @@
+.parent {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+
+.board {
+  display: block;
+}
+
+.board .row {
+  display: flex;
+}
+
+.svg {
+  width: 30px;
+  height: 30px;
+}
+
+.svg.black {
+  fill: black;
+}
+
+.svg.white {
+  fill: #ebecd0;
+}
+
+.playerDiv,
+.pleceDiv {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 3;
+}
+
+.playerDiv {
+  justify-content: space-between;
+}
+
+.pleceDiv div {
+  width: 10;
+  height: 10;
+}
+
+@media only screen and (max-width: 768px) {
+  .square {
+    width: 30px;
+    height: 30px;
+  }
+
+  .svg {
+    width: 15px;
+    height: 15px;
+  }
+}

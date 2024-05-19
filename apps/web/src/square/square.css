@@ -1,0 +1,38 @@
+
+.dark {
+  background-color: #b26e41;
+}
+
+.light {
+  background-color: #ffd59b;
+}
+
+.square {
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.highlighted {
+  background-color: red;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+
+.active {
+  opacity: 0.5;
+}
+
+.selected {
+  border: 1px solid red;
+  z-index: 1000;
+}
+
+.notSelected {
+  border: 1px solid black;
+}
