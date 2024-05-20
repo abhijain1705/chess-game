@@ -2,6 +2,7 @@ import { json, urlencoded } from "body-parser";
 import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import session from "express-session";
 
 export const createServer = (): Express => {
   const app = express();
@@ -9,6 +10,14 @@ export const createServer = (): Express => {
     .disable("x-powered-by")
     .use(morgan("dev"))
     .use(urlencoded({ extended: true }))
+    .use(
+      session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true },
+      })
+    )
     .use(json())
     .use(cors())
     .get("/message/:name", (req, res) => {

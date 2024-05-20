@@ -2,8 +2,18 @@ import { Button } from "@repo/ui/button";
 import React from "react";
 
 const LoginWithTwitter = () => {
+  const api = async () => {
+    const res = await fetch("http://localhost:3001/auth/twitter", {
+      method: "GET",
+    });
+    console.log(res);
+  };
+
   return (
-    <Button className="text-white bg-[#000000] rounded-md px-12 py-2 flex items-center justify-center gap-2">
+    <Button
+      onClick={api}
+      className="text-white bg-[#000000] rounded-md px-12 py-2 flex items-center justify-center gap-2"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="white"
