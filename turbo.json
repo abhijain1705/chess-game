@@ -9,7 +9,7 @@
         ".next/**",
         "!.next/cache/**",
         "public/dist/**",
-        ".vercel/**"
+        ".vercel/output/**"
       ],
       "dependsOn": ["^build"],
       "env": ["NEXT_PUBLIC_API_HOST"]
