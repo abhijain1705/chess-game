@@ -20,25 +20,9 @@ const Login = () => {
         <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-              Sign in to your account
+              Reset Password
             </h1>
             <form className="space-y-4 md:space-y-6" action="#">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                >
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="name@company.com"
-                  required={true}
-                />
-              </div>
               <div>
                 <label
                   htmlFor="password"
@@ -55,29 +39,29 @@ const Login = () => {
                   required={true}
                 />
               </div>
-              <div className="flex items-center justify-between">
-                <a
-                  href="/forgot-password"
-                  className="text-sm font-medium text-primary-600 hover:underline "
+
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
                 >
-                  Forgot password?
-                </a>
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  -gray-600   "
+                  required={true}
+                />
               </div>
               <button
                 type="submit"
                 className="w-full text-white bg-[#b26e41] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Sign in
+                Save Password
               </button>
-              <p className="text-sm font-light text-gray-500 ">
-                Don’t have an account yet?{" "}
-                <a
-                  href="/signup"
-                  className="font-medium text-primary-600 hover:underline "
-                >
-                  Sign up
-                </a>
-              </p>
             </form>
           </div>
         </div>

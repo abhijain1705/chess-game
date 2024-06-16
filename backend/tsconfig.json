@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["ES2015"],
+    "typeRoots": ["./node_modules/@types", "src/types"],
     "outDir": "./dist",
     "paths": {
       "@prisma/client": ["./node_modules/.prisma/client"]
