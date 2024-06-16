@@ -3,6 +3,9 @@
   "compilerOptions": {
     "lib": ["ES2015"],
     "outDir": "./dist",
+    "paths": {
+      "@prisma/client": ["./node_modules/.prisma/client"]
+    },
     "rootDir": "./src"
   },
   "exclude": ["node_modules"],

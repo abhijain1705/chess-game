@@ -1,19 +1,34 @@
 import { createServer } from "./server";
 import { log } from "@repo/logger";
-import { PrismaClient } from "@prisma/client";
 import passport from "passport";
+import { z } from "zod";
 import { Strategy as TwitterStrategy } from "passport-twitter";
+import { MongoClient, Db } from "mongodb";
+// import { UserSchema, User } from "../schemas/user";
 
-const prisma = new PrismaClient();
+const uri =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://abhijain3002:cgX2dtNunGiTMjgM@cluster0.llej5uj.mongodb.net/";
+const client = new MongoClient(uri);
 
 const port = process.env.PORT || 3001;
 const server = createServer();
 
+let db: Db;
+
+const connectToDatabase = async () => {
+  if (!db) {
+    await client.connect();
+    db = client.db("chess-game");
+  }
+  return db;
+};
+
 // Function to verify the database connection
 const verifyDbConnection = async () => {
   try {
-    // Run a simple query to check the connection
-    await prisma.$connect();
+    const db = await connectToDatabase();
+    await db.command({ ping: 1 });
     log("Connected to the database successfully!");
   } catch (error) {
     log("Failed to connect to the database");
@@ -30,7 +45,7 @@ passport.use(
     {
       consumerKey: "ts1pZMITpFbnVbvlxQ0FEbK9K",
       consumerSecret: "IFrihOyiHPgkb9T6abc2ql2JBX8G9oQQ8nyC9jwVknOXlMr4To",
-      callbackURL: "http://localhost:3001/auth/twitter/callback",
+      callbackURL: "http://localhost:3000/auth/twitter/callback",
     },
     function (token, tokenSecret, profile, done) {
       log(token);

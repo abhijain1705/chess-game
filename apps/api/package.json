@@ -14,15 +14,16 @@
     "preset": "@repo/jest-presets/node"
   },
   "dependencies": {
-    "@prisma/client": "^5.14.0",
     "@repo/logger": "workspace:*",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "express-session": "^1.18.0",
+    "mongodb": "^6.7.0",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^1.0.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -43,7 +44,6 @@
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
-    "prisma": "^5.14.0",
     "supertest": "^6.3.3",
     "typescript": "^5.3.3"
   }
