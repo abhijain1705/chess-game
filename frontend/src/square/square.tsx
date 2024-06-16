@@ -291,7 +291,7 @@ const Square = ({
         targetKingPositionRow: 0,
       };
     },
-    [currentTurn]
+    [currentTurn, id, index]
   );
 
   const isAppliedCheckMateCase = useCallback(
@@ -373,7 +373,7 @@ const Square = ({
     [deepCloneArray, isCheckCase]
   );
 
-  function findHighlightedPositions() {
+  const findHighlightedPositions = useCallback(() => {
     const oldPosition = board[index][id];
     let draggedPieceId = (oldPosition as JSX.Element).props.id;
     const response = possiblePositions({
@@ -383,7 +383,7 @@ const Square = ({
     });
 
     sethighlightedBoxes(response);
-  }
+  }, [board, id, index, sethighlightedBoxes]);
 
   useEffect(() => {
     if (isDragging) {
@@ -391,7 +391,7 @@ const Square = ({
     } else {
       sethighlightedBoxes([]);
     }
-  }, [isDragging]);
+  }, [findHighlightedPositions, isDragging, sethighlightedBoxes]);
 
   const dropRef = useRef<HTMLDivElement>(null);
   const [{ canDrop, isOver }, drop] = useDrop(
