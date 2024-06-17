@@ -3,7 +3,7 @@ import { CHESS_APIS } from "./../../../../utils/api_urls";
 
 import { NextRequest, NextResponse } from "next/server";
 
-export default async function handler(req: NextRequest) {
+export async function POST(req: NextRequest) {
   if (req.method === "POST") {
     const data = await req.json();
     const { email } = JSON.parse(data.body);

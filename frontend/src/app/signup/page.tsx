@@ -21,7 +21,7 @@ const Signup = () => {
     password: yup.string().min(8).required("Password is required"),
   });
 
-  const defaultValues = {
+  const defaultValues: SignupForm = {
     email: "",
     name: "",
     password: "",
