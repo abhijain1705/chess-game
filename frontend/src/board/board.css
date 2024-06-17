@@ -44,12 +44,12 @@
 
 @media only screen and (max-width: 768px) {
   .square {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 
   .svg {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
   }
 }

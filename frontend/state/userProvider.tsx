@@ -53,6 +53,8 @@ const notAccessibleRoutesAfterLogin = [
   "/reset-password",
 ];
 
+const notAccessibleRoutesBeforeLogin = ["/profile"];
+
 const UserContextProvider = ({ children }: IProp) => {
   const [userData, setuserData] = useState<{ user: User | null }>({
     user: null,
@@ -64,12 +66,19 @@ const UserContextProvider = ({ children }: IProp) => {
 
   const route = useRouter();
 
+  function handleProperRouting() {
+    if (notAccessibleRoutesBeforeLogin.includes(pathname)) {
+      route.replace("/");
+    }
+  }
+
   const fetchData = useCallback(async () => {
     setloader(true);
 
     const email = window.localStorage.getItem("useremail");
 
     if (email === undefined || email === null) {
+      handleProperRouting();
       setloader(false);
     } else {
       try {
@@ -97,9 +106,11 @@ const UserContextProvider = ({ children }: IProp) => {
           setuserData({ user: res.message });
         } else {
           const res = await response.json();
+          handleProperRouting();
           toast.error(res.message);
         }
       } catch (error: any) {
+        handleProperRouting();
         toast.error(error.message);
       } finally {
         setloader(false);
