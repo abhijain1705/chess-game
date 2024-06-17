@@ -12,11 +12,16 @@ const hashPassword = async (password: string) => {
 };
 
 export async function signup(req: Request, res: Response) {
-  const { name, email, password, username, lastLogInDevice } = req.body;
+  const { name, email, password, username } = req.body;
 
   try {
     // Validate the input
-    UserSchema.parse({ name, email, password, username, lastLogInDevice });
+    UserSchema.parse({
+      name,
+      email,
+      password,
+      username,
+    });
 
     // Connect to the database
     const db = await connectToDatabase();
@@ -39,7 +44,6 @@ export async function signup(req: Request, res: Response) {
       username,
       score: 0,
       lastLogInDate: new Date(),
-      lastLogInDevice,
       match_played: 0,
       match_failed: 0,
       match_win: 0,
@@ -52,12 +56,13 @@ export async function signup(req: Request, res: Response) {
 
     res.status(201).json({ message: "User created successfully" });
   } catch (error: any) {
+    console.log(error, "error h bhai");
     res.status(500).json({ error: error.message });
   }
 }
 
 export async function login(req: Request, res: Response) {
-  const { email, password, lastLogInDevice } = req.body;
+  const { email, password } = req.body;
 
   try {
     // Validate the input
@@ -82,7 +87,9 @@ export async function login(req: Request, res: Response) {
     // Update last login date and device
     await usersCollection.updateOne(
       { email },
-      { $set: { lastLogInDate: new Date(), lastLogInDevice } }
+      {
+        $set: { lastLogInDate: new Date() },
+      }
     );
 
     // Store user information in the session (minimal info for session)

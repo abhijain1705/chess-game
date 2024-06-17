@@ -12,7 +12,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method === "POST") {
-    const { email, password, lastLogInDevice } = req.body;
+    const { email, password } = req.body;
 
     try {
       const response = await fetch(CHESS_APIS.AUTH_APIS.LOG_IN, {
@@ -23,7 +23,6 @@ export default async function handler(
         body: JSON.stringify({
           email,
           password,
-          lastLogInDevice,
         }),
       });
 
