@@ -1,28 +1,26 @@
+import { CHESS_APIS } from "./../../../../utils/api_urls";
 // pages/api/signup.ts
 
-import { CHESS_APIS } from "../../../../utils/api_urls";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export default async function handler(req: NextRequest) {
   if (req.method === "POST") {
     const data = await req.json();
-    const { name, email, password, username } = JSON.parse(data.body);
+    const { email, password } = JSON.parse(data.body);
 
     try {
-      const response = await fetch(CHESS_APIS.AUTH_APIS.SIGN_UP, {
+      const response = await fetch(CHESS_APIS.AUTH_APIS.LOG_IN, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
           email,
           password,
-          username,
         }),
       });
 
-      if (response.status !== 201) {
+      if (!response.ok) {
         const errorData = await response.json();
         return NextResponse.json(
           { message: errorData.error },
