@@ -71,6 +71,10 @@ server.post("/auth/v1/forgot-password", forgotPassword);
 // Reset password endpoint
 server.post("/auth/v1/reset-password/:token", resetPassword);
 
+server.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
 server.listen(port, async () => {
   await verifyDbConnection(); // Verify the database connection
   console.log(`API running on ${port}`);
