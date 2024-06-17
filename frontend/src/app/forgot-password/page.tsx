@@ -12,7 +12,7 @@ interface ForgotPasswordForm {
   email: string;
 }
 
-const Login = () => {
+const ForgotPassword = () => {
   const schema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
   });
@@ -159,4 +159,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
