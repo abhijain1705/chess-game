@@ -72,6 +72,9 @@ const ResetPassword = ({
       if (response.status === 200) {
         const res = await response.json();
         toast.success(res.message);
+        setTimeout(() => {
+          route.replace("/login");
+        }, 1000);
       } else {
         const res = await response.json();
         toast.error(res.message);
@@ -153,7 +156,7 @@ const ResetPassword = ({
                 type="submit"
                 className="w-full text-white bg-[#b26e41] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Save Password
+                {loader ? "Please wait..." : "Save Password"}
               </button>
             </form>
           </div>

@@ -106,6 +106,29 @@ export async function login(req: Request, res: Response) {
   }
 }
 
+export async function getUserFromEmail(req: Request, res: Response) {
+  const { email } = req.body;
+
+  try {
+    // Validate the email
+    z.string().email().parse(email);
+
+    // Connect to the database
+    const db = await connectToDatabase();
+    const usersCollection = db.collection("users");
+
+    // Find the user by email
+    const user = await usersCollection.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "No user found with this email" });
+    }
+
+    res.status(200).json({ message: user });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 export async function forgotPassword(req: Request, res: Response) {
   const { email } = req.body;
 

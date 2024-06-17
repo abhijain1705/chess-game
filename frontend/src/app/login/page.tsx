@@ -58,8 +58,12 @@ const Login = () => {
       });
 
       if (response.status === 200) {
+        window.localStorage.setItem("useremail", data.email);
         const res = await response.json();
         toast.success(res.message);
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000);
       } else {
         const res = await response.json();
         toast.error(res.message);

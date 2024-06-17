@@ -6,5 +6,6 @@ export const CHESS_APIS = {
     LOG_IN: AUTH_API_URL + "/login",
     FORGOT_PASSWORD: AUTH_API_URL + "/forgot-password",
     RESET_PASSWORD: AUTH_API_URL + "/reset-password",
+    GET_USER_FROM_EMAIL: AUTH_API_URL + "/getUserFromEmail",
   },
 };

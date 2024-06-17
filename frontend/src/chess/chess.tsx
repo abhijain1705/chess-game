@@ -7,7 +7,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 const Chess = () => {
   function makeLocalStorageEmpty() {
+    const email = window.localStorage.getItem("useremail");
+
     localStorage.clear();
+    if (email !== undefined && email !== null) {
+      localStorage.setItem("useremail", email);
+    }
     window.location.reload();
   }
 

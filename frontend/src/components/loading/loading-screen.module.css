@@ -1,0 +1,12 @@
+.loadingScreen {
+    background-color: var(--primary-bg-color);
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0turn);
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}

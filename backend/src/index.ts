@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import {
   signup,
   resetPassword,
+  getUserFromEmail,
   login,
   forgotPassword,
 } from "./controllers/auth";
@@ -67,6 +68,8 @@ server.post("/auth/v1/login", login);
 
 // Forgot password endpoint
 server.post("/auth/v1/forgot-password", forgotPassword);
+
+server.post("/auth/v1/getUserFromEmail", getUserFromEmail);
 
 // Reset password endpoint
 server.post("/auth/v1/reset-password/:token", resetPassword);
