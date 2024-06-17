@@ -30,6 +30,9 @@ const Chess = () => {
               alt="logo"
             />
           </a>
+          <a href="/profile" className="button" style={{ top: "50px" }}>
+            my profile
+          </a>
           <button className="button" onClick={makeLocalStorageEmpty}>
             new game
           </button>
