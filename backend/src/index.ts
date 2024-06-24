@@ -74,7 +74,7 @@ server.post("/auth/v1/forgot-password", forgotPassword);
 server.post("/auth/v1/getUserFromEmail", getUserFromEmail);
 
 // get user from username
-server.post("/auth/v1/getUserFromUserName", getUserFromName);
+server.post("/auth/v1/getUserFromName", getUserFromName);
 
 // Reset password endpoint
 server.post("/auth/v1/reset-password/:token", resetPassword);

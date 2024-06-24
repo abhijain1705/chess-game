@@ -1,6 +1,10 @@
 "use client";
-import React from "react";
-import { useUserContext } from "../../../state/userProvider";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { User } from "../../../state/userProvider";
+import axios from "axios";
+import toast from "react-hot-toast";
+import LoadingScreen from "@/components/loading/loading-screen";
 
 // Function for validation of date format
 function isValidDate(stringDate: string) {
@@ -8,7 +12,47 @@ function isValidDate(stringDate: string) {
 }
 
 const Profile = () => {
-  const { user } = useUserContext();
+  const searchParams = useSearchParams();
+
+  const [userData, setuserData] = useState<{ user: User | null }>({
+    user: null,
+  });
+  const search = searchParams.get("username");
+  const [loader, setloader] = useState(true);
+
+  const fetchData = useCallback(async (username: string) => {
+    setloader(true);
+
+    try {
+      const response = await axios.post("/api/getUserFromName", {
+        username: username,
+      });
+
+      if (response.status === 200) {
+        const res = response.data;
+
+        setuserData({ user: res.message });
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setloader(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (search !== undefined && search !== null) {
+      fetchData(search?.toString());
+    }
+  }, [fetchData, search]);
+
+  if (loader) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="p-[56px] bg-[#ffd59b] min-h-[100vh] pt-[100px]">
@@ -18,9 +62,8 @@ const Profile = () => {
           <h2 className="text-[#37322f] text-[48px] font-[600] leading-[52px]">
             Profile
           </h2>
-          {user !== null &&
-            user !== undefined &&
-            Object.entries(user)
+          {userData.user !== null &&
+            Object.entries(userData.user)
               .filter(([key, value]) => key !== "_id" && key !== "password")
               .map(([key, value], index) => (
                 <div className="flex" key={index}>

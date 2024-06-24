@@ -54,7 +54,7 @@ const notAccessibleRoutesAfterLogin = [
   "/reset-password",
 ];
 
-const notAccessibleRoutesBeforeLogin = ["/profile"];
+const notAccessibleRoutesBeforeLogin = [""];
 
 const UserContextProvider = ({ children }: IProp) => {
   const [userData, setuserData] = useState<{ user: User | null }>({
@@ -78,7 +78,6 @@ const UserContextProvider = ({ children }: IProp) => {
 
     const email = window.localStorage.getItem("useremail");
 
-    console.log(email, "jnefderftgeyskvrnkt");
     if (email === undefined || email === null) {
       handleProperRouting();
       setloader(false);
@@ -89,7 +88,6 @@ const UserContextProvider = ({ children }: IProp) => {
         });
 
         if (response.status === 200) {
-          console.log(response, "jnefskvrnkt");
           const res = response.data;
           if (notAccessibleRoutesAfterLogin.includes(pathname)) {
             route.replace("/");

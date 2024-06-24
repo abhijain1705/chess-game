@@ -5,6 +5,7 @@ import ChessBoard from "../board/board";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Image from "next/image";
+import { useUserContext } from "../../state/userProvider";
 
 const Chess = () => {
   function makeLocalStorageEmpty() {
@@ -16,6 +17,8 @@ const Chess = () => {
     }
     window.location.reload();
   }
+
+  const { user } = useUserContext();
 
   return (
     <>
@@ -30,7 +33,11 @@ const Chess = () => {
               alt="logo"
             />
           </a>
-          <a href="/profile" className="button" style={{ top: "50px" }}>
+          <a
+            href={`/profile?username=${user?.username}`}
+            className="button"
+            style={{ top: "50px" }}
+          >
             my profile
           </a>
           <button className="button" onClick={makeLocalStorageEmpty}>
