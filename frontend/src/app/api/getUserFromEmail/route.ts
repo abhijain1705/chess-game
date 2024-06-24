@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   if (req.method === "POST") {
     const data = await req.json();
-    const { email } = JSON.parse(data.body);
+    const { email } = data;
 
     try {
       const response = await fetch(CHESS_APIS.AUTH_APIS.GET_USER_FROM_EMAIL, {
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         }),
       });
 
-      if (response.status !== 201) {
+      if (response.status !== 200) {
         const errorData = await response.json();
         return NextResponse.json(
           { message: errorData.error },

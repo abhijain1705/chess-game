@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import LoadingScreen from "@/components/loading/loading-screen";
 import { createContext, useContext } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import axios from "axios";
 
 interface IProp {
   children: ReactNode;
@@ -77,37 +78,26 @@ const UserContextProvider = ({ children }: IProp) => {
 
     const email = window.localStorage.getItem("useremail");
 
+    console.log(email, "jnefderftgeyskvrnkt");
     if (email === undefined || email === null) {
       handleProperRouting();
       setloader(false);
     } else {
       try {
-        const response = await fetch("/api/getUserFromEmail", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: email,
-            }),
-          }),
+        const response = await axios.post("/api/getUserFromEmail", {
+          email: email,
         });
 
         if (response.status === 200) {
-          const res = await response.json();
+          console.log(response, "jnefskvrnkt");
+          const res = response.data;
           if (notAccessibleRoutesAfterLogin.includes(pathname)) {
             route.replace("/");
           }
           setuserData({ user: res.message });
         } else {
-          const res = await response.json();
           handleProperRouting();
-          toast.error(res.message);
+          toast.error(response.data.message);
         }
       } catch (error: any) {
         handleProperRouting();
