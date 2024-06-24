@@ -8,6 +8,7 @@ import {
   getUserFromEmail,
   login,
   forgotPassword,
+  getUserFromName,
 } from "./controllers/auth";
 
 const uri = process.env.MONGODB_URI || "";
@@ -69,7 +70,11 @@ server.post("/auth/v1/login", login);
 // Forgot password endpoint
 server.post("/auth/v1/forgot-password", forgotPassword);
 
+// get user from email
 server.post("/auth/v1/getUserFromEmail", getUserFromEmail);
+
+// get user from username
+server.post("/auth/v1/getUserFromUserName", getUserFromName);
 
 // Reset password endpoint
 server.post("/auth/v1/reset-password/:token", resetPassword);
