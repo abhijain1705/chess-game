@@ -57,6 +57,9 @@ const Profile = () => {
   useEffect(() => {
     if (search !== undefined && search !== null) {
       fetchData(search?.toString());
+    } else {
+      setloader(false);
+      setnoData(true);
     }
   }, [fetchData, search]);
 
