@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
 
       if (response.status !== 200) {
         const errorData = await response.json();
+
         return NextResponse.json(
           { message: errorData.error },
           { status: response.status }
