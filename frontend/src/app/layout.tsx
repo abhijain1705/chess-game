@@ -43,7 +43,7 @@ export default function RootLayout({
           content="https://yourwebsite.com/og-image.jpg"
         />
         <meta property="og:site_name" content="Chess.com Clone" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="./favicon.ico" />
         <title>Chess.com Clone</title>
       </Head>
       <body className={inter.className}>
