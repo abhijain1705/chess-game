@@ -34,7 +34,7 @@ const Chess = () => {
             />
           </a>
           <a
-            href={`/profile?username=${user?.username}`}
+            href={`/${user?.username}`}
             className="button"
             style={{ top: "50px" }}
           >
