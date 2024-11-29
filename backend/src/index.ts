@@ -52,14 +52,17 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
     },
   });
 
-  const resetLink = `http://localhost:3000/reset-password/${token}`;
+  const resetLink = `${process.env.UI_ROUTE}/reset-password/${token}`;
 
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Password Reset",
     text: `Click the link to reset your password: ${resetLink}`,
-    html: `<p>Click the link to reset your password: <a href="${resetLink}">${resetLink}</a></p>`,
+    html: `<div>
+        <h1>FORGOT PASSWORD</h1>
+        <p>Click the link to reset your password: <a href="${resetLink}">${resetLink}</a></p>
+     </div>`,
   });
 };
 
