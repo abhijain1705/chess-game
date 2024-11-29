@@ -1,4 +1,4 @@
-const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_API_URL;
+const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_DEV_API_URL;
 
 export const CHESS_APIS = {
   AUTH_APIS: {
