@@ -29,7 +29,7 @@ Need some features you think might be helpful for others? Raise a PR and we will
 
 ## Local Setup:
 
-Here is a documentation for if you want to setup this repo locally - [Local Setup Doc](https://github.com/abhijain1705/chess-game/tree/main/docs/local-setup/readme.md)
+Here is a documentation for if you want to setup this repo locally - [Local Setup Doc](https://github.com/abhijain1705/chess-game/tree/ver_two/docs/local-setup/readme.md)
 
 ## API Documentation:
 
@@ -37,11 +37,11 @@ Here is the API documentation - [API Doc](https://documenter.getpostman.com/view
 
 ## Backend Documentation:
 
-Link to backend docs - [Backend Doc](https://github.com/abhijain1705/chess-game/tree/main/docs/backend)
+Link to backend docs - [Backend Doc](https://github.com/abhijain1705/chess-game/tree/ver_two/docs/backend)
 
 ## Folder Structure and others:
 
-Link to general docs for this repository - [General Docs](https://github.com/abhijain1705/chess-game/tree/main/docs/folder-structure/readme.md)
+Link to general docs for this repository - [General Docs](https://github.com/abhijain1705/chess-game/tree/ver_two/docs/folder-structure/readme.md)
 
 **Code of Conduct:**
 
