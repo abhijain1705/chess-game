@@ -10,12 +10,14 @@ import {
   forgotPassword,
   getUserFromName,
 } from "./controllers/auth";
+import { Server } from "socket.io";
 
 const uri = process.env.MONGODB_URI || "";
 const client = new MongoClient(uri);
 
 const port = process.env.PORT || 3001;
-const server = createServer();
+const { server, app } = createServer();
+const io = new Server(server);
 
 let db: Db;
 
@@ -62,24 +64,24 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
 };
 
 // Signup endpoint
-server.post("/auth/v1/signup", signup);
+app.post("/auth/v1/signup", signup);
 
 // Login endpoint
-server.post("/auth/v1/login", login);
+app.post("/auth/v1/login", login);
 
 // Forgot password endpoint
-server.post("/auth/v1/forgot-password", forgotPassword);
+app.post("/auth/v1/forgot-password", forgotPassword);
 
 // get user from email
-server.post("/auth/v1/getUserFromEmail", getUserFromEmail);
+app.post("/auth/v1/getUserFromEmail", getUserFromEmail);
 
 // get user from username
-server.post("/auth/v1/getUserFromName", getUserFromName);
+app.post("/auth/v1/getUserFromName", getUserFromName);
 
 // Reset password endpoint
-server.post("/auth/v1/reset-password/:token", resetPassword);
+app.post("/auth/v1/reset-password/:token", resetPassword);
 
-server.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World");
 });
 

@@ -2,9 +2,10 @@ import { json, urlencoded } from "body-parser";
 import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import * as http from "http";
 import session from "express-session";
 
-export const createServer = (): Express => {
+export const createServer = () => {
   const app = express();
   app
     .disable("x-powered-by")
@@ -27,5 +28,5 @@ export const createServer = (): Express => {
       return res.json({ ok: true });
     });
 
-  return app;
+  return { server: http.createServer(app), app: app };
 };
