@@ -217,7 +217,7 @@ export async function resetPassword(req: Request, res: Response) {
       { $set: { password: hashedPassword, updatedAt: new Date() } }
     );
 
-    res.status(200).json({ message: "Password reset successful" });
+    res.status(200).json({ message: "Password reset successfull" });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
