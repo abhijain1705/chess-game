@@ -1,2 +1,5 @@
+# Ignore environment files in frontend and backend
 frontend/.env
 backend/.env
+**/.env
+**/dist
