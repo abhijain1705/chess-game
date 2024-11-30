@@ -3,3 +3,7 @@ frontend/.env
 backend/.env
 **/.env
 **/dist
+**/node_modules
+**/.vercel
+
+**/dist
