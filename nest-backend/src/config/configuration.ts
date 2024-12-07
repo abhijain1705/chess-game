@@ -19,11 +19,6 @@ export const Configuration: ConfigType = {
 
   // redis
   REDIS_URL: process.env.REDIS_URL,
-  REDIS_HOST: process.env.REDIS_HOST,
-  REDIS_PORT: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
-  REDIS_DB: process.env.REDIS_DB ? parseInt(process.env.REDIS_DB) : 0,
-  REDIS_PASSWORD: process.env.REDIS_PASSWORD, // Optional, if Redis uses password
-  REDIS_PRIFIX: process.env.REDIS_PRIFIX, // Optional, key prefix for Redis
 
   // ui route
   UI_ROUTE: process.env.UI_ROUTE,
