@@ -7,9 +7,4 @@ export type ConfigType = {
   UI_ROUTE: string;
   JWT_SECRET: string;
   REDIS_URL: string;
-  REDIS_HOST: string;
-  REDIS_DB: number;
-  REDIS_PORT: number;
-  REDIS_PRIFIX: string;
-  REDIS_PASSWORD: string;
 };
