@@ -26,9 +26,6 @@ export class User {
   @Column()
   email: string;
 
-  @Column({ default: 0 })
-  score: number;
-
   @Column()
   password: string;
 
@@ -37,18 +34,6 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @Column({ default: 0 })
-  match_played: number;
-
-  @Column({ default: 0 })
-  match_failed: number;
-
-  @Column({ default: 0 })
-  match_win: number;
-
-  @Column()
-  rank: number;
 
   @Column()
   last_log_in_date: Date;
