@@ -1,5 +1,6 @@
 // nest imports
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
 // modules
 import { AppModule } from './app.module';
@@ -18,6 +19,9 @@ async function bootstrap() {
 
   // apply the interceptor globally
   app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // validation pipe
+  app.useGlobalPipes(new ValidationPipe());
 
   // Apply exception filter globally
   app.useGlobalFilters(new HttpExceptionFilter());
