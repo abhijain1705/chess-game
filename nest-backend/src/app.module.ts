@@ -1,5 +1,5 @@
 // nestjs import
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 // controller
 import { AppController } from './app.controller';
@@ -15,6 +15,10 @@ import { AuthModule } from './modules/auth/auth.module';
 // configuration
 import { Configuration } from './config/configuration';
 import { RedisModule } from './modules/redis/redis.module';
+import { UsersModule } from './modules/users/users.module';
+
+// middleware
+import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
 
 @Module({
   imports: [
@@ -33,8 +37,13 @@ import { RedisModule } from './modules/redis/redis.module';
     }),
     AuthModule,
     RedisModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('auth');
+  }
+}
