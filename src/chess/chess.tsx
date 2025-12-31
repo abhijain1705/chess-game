@@ -5,21 +5,8 @@ import ChessBoard from "../board/board";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Image from "next/image";
-import { useUserContext } from "../../state/userProvider";
 
 const Chess = () => {
-  function makeLocalStorageEmpty() {
-    const email = window.localStorage.getItem("useremail");
-
-    localStorage.clear();
-    if (email !== undefined && email !== null) {
-      localStorage.setItem("useremail", email);
-    }
-    window.location.reload();
-  }
-
-  const { user } = useUserContext();
-
   return (
     <>
       <DndProvider backend={HTML5Backend}>
@@ -33,16 +20,6 @@ const Chess = () => {
               alt="logo"
             />
           </a>
-          <a
-            href={`/${user?.username}`}
-            className="button"
-            style={{ top: "50px" }}
-          >
-            my profile
-          </a>
-          <button className="button" onClick={makeLocalStorageEmpty}>
-            new game
-          </button>
           <ChessBoard />
         </div>
       </DndProvider>
