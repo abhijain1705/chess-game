@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect, JSX } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import "./square.css";
 import { findPathToKing, possiblePositions } from "../logics/logics";

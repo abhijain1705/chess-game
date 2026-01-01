@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export function possiblePositions({
   draggedPieceId,
   currentPosition: { row, col },
@@ -5,7 +7,7 @@ export function possiblePositions({
 }: {
   draggedPieceId: string;
   currentPosition: { row: number; col: number };
-  board: (React.JSX.Element[] | string[])[];
+  board: (JSX.Element[] | string[])[];
 }): number[][] {
   switch (draggedPieceId) {
     case "pawn-black":

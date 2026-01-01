@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { JSX, useCallback, useEffect, useState } from "react";
 import Square from "../square/square";
 import "./board.css";
 
